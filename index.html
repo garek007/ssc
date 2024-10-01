@@ -19,7 +19,7 @@
                 ]
             });
 
-        let addtopage = document.getElementsByName("addtopage");
+        let addtopage = document.getElementsByName("addtopage")[0];
         addtopage.addEventListener("click",function(e){
             console.log(e.target);
             sdk.setContent('<input type="text" name="FirstName" id="FirstName">');
