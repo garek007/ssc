@@ -47,8 +47,8 @@
  
  
             document.addEventListener("click",function(e){
-                console.log(e.target); 
-                sdk.setContent('<input type="text" name="'+fieldName.value+'" id="FirstName">');
+                console.log(e.target.id); 
+                sdk.setContent('<input type="text" name="'+e.target.id+'" id="'+e.target.id+'"><label for="'+e.target.id+'">'+e.target.id+'</label>');
 
             });
             var sdk = new window.sfdc.BlockSDK({
