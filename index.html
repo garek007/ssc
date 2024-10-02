@@ -1,15 +1,56 @@
 <html>
     <head>
-
-
+<style>
+    .field-container{
+        display:block;
+    }
+</style>
     </head>
     <body>
-
+<div id="container"> </div>
         <input type="text" name="api" id="api">
         <select name="type" id="type"></select>
         <button name="addtopage"></button>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
         <script src="https://combinatronics.com/salesforce-marketingcloud/blocksdk/refs/heads/master/blocksdk.js"></script>
-        <script>
+        <script type="module">
+            import { objects } from "./objects.js";
+            console.log(objects)
+
+            const container = document.getElementById("container");
+            for (const [key, value] of Object.entries(objects.contact)) {
+                console.log(`${key}: ${value}`);
+                let div = document.createElement("div");
+                    div.class = "field-container";
+                let field = document.createElement("input");
+                    field.type = "checkbox";
+                    field.name = key;
+                    field.id = key;
+                    field.classList.add("addtopage");
+                    div.appendChild(field);
+                let labelText = document.createTextNode(key);
+                let label = document.createElement("label");
+                    label.htmlFor = key;
+                    label.appendChild(labelText);
+
+                    div.appendChild(label);
+
+                // and give it some content
+                //let fieldText = document.createTextNode(key);
+                
+
+                // add the text node to the newly created div
+                container.appendChild(div);
+
+            
+              }
+ 
+ 
+            document.addEventListener("click",function(e){
+                console.log(e.target); 
+                sdk.setContent('<input type="text" name="'+fieldName.value+'" id="FirstName">');
+
+            });
             var sdk = new window.sfdc.BlockSDK({
                 blockEditorWidth: 600,
                 tabs: [
@@ -19,10 +60,15 @@
                 ]
             });
 
-        let addtopage = document.getElementsByName("addtopage")[0];
+        const addtopage = document.getElementsByName("addtopage")[0];
+        const fieldName = document.getElementById("api");
+        const fieldType = document.getElementById("type");
+
         addtopage.addEventListener("click",function(e){
             console.log(e.target);
-            sdk.setContent('<input type="text" name="FirstName" id="FirstName">');
+            console.log(fieldName.value);
+
+            sdk.setContent('<input type="text" name="'+fieldName.value+'" id="FirstName">');
         });
 
 
