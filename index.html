@@ -10,7 +10,7 @@
 <div id="container"> </div>
         <input type="text" name="api" id="api">
         <select name="type" id="type"></select>
-        <button name="addtopage"></button>
+        <button name="addtopage">Add to Block</button>
         <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
         <script src="https://combinatronics.com/salesforce-marketingcloud/blocksdk/refs/heads/master/blocksdk.js"></script>
         <script type="module">
@@ -26,7 +26,7 @@
                     field.type = "checkbox";
                     field.name = key;
                     field.id = key;
-                    field.classList.add("addtopage");
+                    field.classList.add("add-to-page");
                     div.appendChild(field);
                 let labelText = document.createTextNode(key);
                 let label = document.createElement("label");
@@ -47,11 +47,22 @@
  
  
             document.addEventListener("click",function(e){
-                console.log(e.target.id); 
-                sdk.getContent(function(content){
-                    content += '<input type="text" name="'+e.target.id+'" id="'+e.target.id+'"><label for="'+e.target.id+'">'+e.target.id+'</label>';
-                    sdk.setContent(content);
-                });
+                console.log("not a checkbox "+e.target.id); 
+
+                if(e.target.classList.contains("added-to-page")){
+                    console.log("remove from page");
+                    sdk.getContent(function(content){
+console.log(content)
+                    });                    
+                }else if(e.target.classList.contains("add-to-page")){
+                    console.log("is valid " +e.target.id);
+                    e.target.classList.add("added-to-page");
+                    sdk.getContent(function(content){
+                        content += '<input type="text" name="'+e.target.id+'" id="'+e.target.id+'"><label for="'+e.target.id+'">'+e.target.id+'</label>';
+                        sdk.setContent(content);
+                    });
+                }
+
                 
 
             });
@@ -64,16 +75,16 @@
                 ]
             });
 
-        const addtopage = document.getElementsByName("addtopage")[0];
+        //const addtopage = document.getElementsByName("addtopage")[0];
         const fieldName = document.getElementById("api");
         const fieldType = document.getElementById("type");
 
-        addtopage.addEventListener("click",function(e){
-            console.log(e.target);
-            console.log(fieldName.value);
+        //addtopage.addEventListener("click",function(e){
+           // console.log(e.target);
+           // console.log(fieldName.value);
 
             //sdk.setContent('<input type="text" name="'+fieldName.value+'" id="FirstName">');
-        });
+        //});
 
 
 
