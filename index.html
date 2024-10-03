@@ -48,20 +48,19 @@
  
             document.addEventListener("click",function(e){
                 console.log("not a checkbox "+e.target.id); 
+                let fields = document.querySelectorAll(".add-to-page");
+                console.log(fields);
+                let content = "";
+                fields.forEach((field) => {
+                    if(field.checked){
+                        console.log(field);
+                        let id = field.id;
+                        content += '<input type="text" name="'+id+'" id="'+id+'"><label for="'+id+'">'+id+'</label>';
+                    }
+                });
+                sdk.setContent(content);
 
-                if(e.target.classList.contains("added-to-page")){
-                    console.log("remove from page");
-                    sdk.getContent(function(content){
-console.log(content)
-                    });                    
-                }else if(e.target.classList.contains("add-to-page")){
-                    console.log("is valid " +e.target.id);
-                    e.target.classList.add("added-to-page");
-                    sdk.getContent(function(content){
-                        content += '<input type="text" name="'+e.target.id+'" id="'+e.target.id+'"><label for="'+e.target.id+'">'+e.target.id+'</label>';
-                        sdk.setContent(content);
-                    });
-                }
+
 
                 
 
