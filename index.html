@@ -4,6 +4,10 @@
     .field-container{
         display:block;
     }
+    #container{
+        background:#ddd;
+        width:fit-content;
+    }
 </style>
     </head>
     <body>
@@ -18,35 +22,32 @@
             console.log(objects)
 
             const container = document.getElementById("container");
-            for (const [key, value] of Object.entries(objects.contact)) {
-                console.log(`${key}: ${value}`);
+
+            //for loop to load object fields from objects.js
+            for (const [fieldName, fieldType] of Object.entries(objects.contact)) {
+                console.log(`${fieldName}: ${fieldType}`);
                 let div = document.createElement("div");
                     div.class = "field-container";
                 let field = document.createElement("input");
                     field.type = "checkbox";
-                    field.name = key;
-                    field.id = key;
+                    field.name = fieldName;
+                    field.id = fieldName;
                     field.classList.add("add-to-page");
+                    field.setAttribute("data-type",fieldType);
                     div.appendChild(field);
-                let labelText = document.createTextNode(key);
+                let labelText = document.createTextNode(fieldName);
                 let label = document.createElement("label");
-                    label.htmlFor = key;
+                    label.htmlFor = fieldName;
                     label.appendChild(labelText);
 
                     div.appendChild(label);
 
-                // and give it some content
-                //let fieldText = document.createTextNode(key);
-                
-
-                // add the text node to the newly created div
                 container.appendChild(div);
 
-            
               }
  
  
-            document.addEventListener("click",function(e){
+            container.addEventListener("click",function(e){
                 console.log("not a checkbox "+e.target.id); 
                 let fields = document.querySelectorAll(".add-to-page");
                 console.log(fields);
@@ -55,12 +56,27 @@
                     if(field.checked){
                         console.log(field);
                         let id = field.id;
-                        content += '<input type="text" name="'+id+'" id="'+id+'"><label for="'+id+'">'+id+'</label>';
+                        let type = field.dataset.type;
+                        content += '<div style="display:block;"><input type="'+type+'" name="'+id+'" id="'+id+'"><label for="'+id+'">'+id+'</label></div>';
                     }
                 });
                 sdk.setContent(content);
 
 
+/*
+                if(e.target.classList.contains("added-to-page")){
+                    console.log("remove from page");
+                    sdk.getContent(function(content){
+                        console.log(content)
+                    });                    
+                }else if(e.target.classList.contains("add-to-page")){
+                    console.log("is valid " +e.target.id);
+                    e.target.classList.add("added-to-page");
+                    sdk.getContent(function(content){
+                        content += '<input type="text" name="'+e.target.id+'" id="'+e.target.id+'"><label for="'+e.target.id+'">'+e.target.id+'</label>';
+                        sdk.setContent(content);
+                    });
+                }*/
 
                 
 
