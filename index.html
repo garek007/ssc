@@ -48,7 +48,11 @@
  
             document.addEventListener("click",function(e){
                 console.log(e.target.id); 
-                sdk.setContent('<input type="text" name="'+e.target.id+'" id="'+e.target.id+'"><label for="'+e.target.id+'">'+e.target.id+'</label>');
+                sdk.getContent(function(content){
+                    content += '<input type="text" name="'+e.target.id+'" id="'+e.target.id+'"><label for="'+e.target.id+'">'+e.target.id+'</label>';
+                    sdk.setContent(content);
+                });
+                
 
             });
             var sdk = new window.sfdc.BlockSDK({
@@ -68,7 +72,7 @@
             console.log(e.target);
             console.log(fieldName.value);
 
-            sdk.setContent('<input type="text" name="'+fieldName.value+'" id="FirstName">');
+            //sdk.setContent('<input type="text" name="'+fieldName.value+'" id="FirstName">');
         });
 
 
